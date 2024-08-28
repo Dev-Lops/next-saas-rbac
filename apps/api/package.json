@@ -2,12 +2,14 @@
   "name": "@saas/api",
   "version": "0.0.0",
   "scripts": {
-    "dev": "tsx watch src/http/server.ts"
+    "seed:": "ts-node prisma/seed.ts",
+    "db:seed": "pnpm prisma db seed"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
     "@prisma/client": "5.19.0",
     "@saas/auth": "workspace:*",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
     "fastify-type-provider-zod": "^2.0.0",
@@ -15,13 +17,20 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@saas/eslint-config": "workspace:*",
     "@saas/prettier": "workspace:*",
     "@saas/tsconfig": "workspace:*",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.5.0",
     "prisma": "^5.19.0",
-    "tsx": "^4.19.0"
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.0",
+    "typescript": "^5.4.5"
   },
+  "prisma": {
+  "seed": "ts-node prisma/seed.ts"
+},
   "prettier": "@saas/prettier",
   "eslintConfig": {
     "extends": [
