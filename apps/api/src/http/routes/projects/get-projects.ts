@@ -29,7 +29,7 @@ export async function getProjects(app: FastifyInstance) {
                   description: z.string(),
                   name: z.string(),
                   slug: z.string(),
-                  avatarUrl: z.string().nullable(),
+                  avatarUrl: z.string().url().nullable(),
                   organizationId: z.string().uuid(),
                   ownerId: z.string().uuid(),
                   createdAt: z.date(),
@@ -37,7 +37,7 @@ export async function getProjects(app: FastifyInstance) {
                   owner: z.object({
                     id: z.string().uuid(),
                     name: z.string().nullable(),
-                    avatarUrl: z.string().nullable(),
+                    avatarUrl: z.string().url().nullable(),
                   }),
                 }),
               ),
@@ -86,7 +86,7 @@ export async function getProjects(app: FastifyInstance) {
             created_at: 'desc',
           },
         })
-        
+
         const formattedProjects = projects.map(project => ({
           ...project,
           createdAt: project.created_at,
