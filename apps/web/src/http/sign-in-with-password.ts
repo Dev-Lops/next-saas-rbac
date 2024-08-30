@@ -5,12 +5,20 @@ export async function signInWithPassword({
   email,
   password
 }: signInWithPasswordRequest) {
-  const result = await api.post('sessions/password', {
-    json: {
-      email,
-      password,
-    }
-  }).json<signInWithPasswordResponse>()
+  try {
+    const result = await api.post('sessions/password', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        password
+      })
+    }).json<signInWithPasswordResponse>();
 
-  return result;
+    return result;
+  } catch (error) {
+    console.error('Error during sign-in:', error);
+    throw error;
+  }
 }
