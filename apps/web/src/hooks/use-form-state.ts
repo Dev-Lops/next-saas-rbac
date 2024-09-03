@@ -1,5 +1,13 @@
-import type { FormState } from "@/interfaces/form-state"
-import { useState, useTransition, FormEvent } from "react"
+"use client";
+
+import { FormEvent, useState, useTransition } from 'react';
+import { requestFormReset } from 'react-dom';
+
+interface FormState {
+  success: boolean
+  message: string | null
+  errors: Record<string, string[]> | null
+}
 
 export function useFormState(
   action: (data: FormData) => Promise<FormState>,
@@ -21,12 +29,14 @@ export function useFormState(
     startTransition(async () => {
       const state = await action(data)
 
-      if (state.success === true && onSuccess) {
+      if (state.success && onSuccess) {
         await onSuccess()
       }
 
       setFormState(state)
     })
+
+    requestFormReset(form)
   }
 
   return [formState, handleSubmit, isPending] as const

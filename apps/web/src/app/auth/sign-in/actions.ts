@@ -1,4 +1,4 @@
-'use server'
+"use server"
 
 import { signInWithPassword } from "@/http/sign-in-with-password";
 import { HTTPError } from "ky";
