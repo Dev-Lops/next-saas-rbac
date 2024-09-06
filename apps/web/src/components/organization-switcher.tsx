@@ -2,10 +2,10 @@ import { ChevronsUpDown, PlusCircle } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { getOrganizations } from "@/http/get-organizations";
-import { cookies } from "next/headers";
+import { getCurrentOrg } from "@/auth/auth";
 
 export async function OrganizationSwitch() {
-  const currentOrg = cookies().get('org')?.value
+  const currentOrg = getCurrentOrg()
   const { organizations } = await getOrganizations()
 
   const currentOrganization = organizations.find(org => org.slug === currentOrg)
