@@ -9,7 +9,7 @@ export async function createAccount(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post('/users', {
     schema: {
       tags: ['auth'],
-      sumary: 'Create a new account',
+      summary: 'Create a new account',
       body: z.object({
         name: z.string().min(3),
         email: z.string().email(),

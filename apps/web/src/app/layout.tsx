@@ -1,26 +1,23 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { ThemeProvider } from "next-themes";
+import './globals.css'
+
+import type { Metadata } from 'next'
+
+import { Providers } from './providers'
 
 export const metadata: Metadata = {
-  title: "Create Next App",
-};
+  title: 'Create Next App',
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+      <body>
+        <Providers>{children}</Providers>
       </body>
     </html>
-  );
+  )
 }
