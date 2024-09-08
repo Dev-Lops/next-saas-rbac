@@ -1,7 +1,5 @@
-import type { CreateProjectRequest } from '@/interfaces/create-project-interface'
+import type { CreateProjectRequest, CreateProjectResponse } from '@/interfaces/create-project-interface'
 import { api } from './api-client'
-
-type CreateProjectResponse = void
 
 export async function createProject({
   org,

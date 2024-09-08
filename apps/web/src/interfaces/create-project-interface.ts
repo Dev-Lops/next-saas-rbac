@@ -3,3 +3,5 @@ export interface CreateProjectRequest {
   name: string
   description: string
 }
+
+export type CreateProjectResponse = void
