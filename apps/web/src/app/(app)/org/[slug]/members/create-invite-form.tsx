@@ -25,6 +25,7 @@ export function CreateInviteForm() {
       {success === false && message && (
         <Alert variant="destructive">
           <AlertTriangle className="size-4" />
+
           <AlertTitle>Invite failed!</AlertTitle>
           <AlertDescription>
             <p>{message}</p>

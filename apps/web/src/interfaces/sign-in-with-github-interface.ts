@@ -1,6 +1,8 @@
-export interface signInWithGitHubRequest {
+
+export interface SignInWithGithubRequest {
   code: string
 }
-export interface signInWithGitHubResponse {
+
+export interface SignInWithGithubResponse {
   token: string
 }

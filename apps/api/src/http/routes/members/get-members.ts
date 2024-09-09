@@ -1,3 +1,4 @@
+import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
@@ -6,7 +7,6 @@ import { auth } from '@/http/middlewares/auth'
 import { UnauthorizedError } from '@/http/routes/_errors/unauthorized-error'
 import { prisma } from '@/lib/prisma'
 import { getUserPermissions } from '@/utils/get-user-permissions'
-import { roleSchema } from '@saas/auth'
 
 export async function getMembers(app: FastifyInstance) {
   app
@@ -16,7 +16,7 @@ export async function getMembers(app: FastifyInstance) {
       '/organizations/:slug/members',
       {
         schema: {
-          tags: ['members'],
+          tags: ['Members'],
           summary: 'Get all organization members',
           security: [{ bearerAuth: [] }],
           params: z.object({
@@ -59,11 +59,11 @@ export async function getMembers(app: FastifyInstance) {
             user: {
               select: {
                 id: true,
-                email: true,
                 name: true,
+                email: true,
                 avatarUrl: true,
-              }
-            }
+              },
+            },
           },
           where: {
             organizationId: organization.id,
@@ -73,15 +73,17 @@ export async function getMembers(app: FastifyInstance) {
           },
         })
 
-        const membersWhitRoles = members.map(({ user: { id: userId, ...user }, ...member }) => {
-          return {
-            ...user,
-            ...member,
-            userId,
-          }
-        })
+        const membersWithRoles = members.map(
+          ({ user: { id: userId, ...user }, ...member }) => {
+            return {
+              ...user,
+              ...member,
+              userId,
+            }
+          },
+        )
 
-        return reply.send({ members: membersWhitRoles })
+        return reply.send({ members: membersWithRoles })
       },
     )
 }

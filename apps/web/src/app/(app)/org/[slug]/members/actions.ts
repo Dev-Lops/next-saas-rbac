@@ -7,10 +7,9 @@ import { z } from 'zod'
 
 import { getCurrentOrg } from '@/auth/auth'
 import { createInvite } from '@/http/create-invite'
+import { removeMember } from '@/http/remove-member'
 import { revokeInvite } from '@/http/revoke-invite'
-import { removeMember } from '@/http/revoke-member'
 import { updateMember } from '@/http/update-member'
-
 
 const inviteSchema = z.object({
   email: z.string().email({ message: 'Invalid e-mail address.' }),
