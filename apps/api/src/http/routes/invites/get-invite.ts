@@ -3,81 +3,73 @@ import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
-import { auth } from '@/http/middlewares/auth'
-import { UnauthorizedError } from '@/http/routes/_errors/unauthorized-error'
+import { BadRequestError } from '@/http/routes/_errors/bad-request-error'
 import { prisma } from '@/lib/prisma'
-import { getUserPermissions } from '@/utils/get-user-permissions'
 
-export async function getInvites(app: FastifyInstance) {
-  app
-    .withTypeProvider<ZodTypeProvider>()
-    .register(auth)
-    .get(
-      '/organizations/:slug/invites',
-      {
-        schema: {
-          tags: ['Invites'],
-          summary: 'Get all organization invites',
-          security: [{ bearerAuth: [] }],
-          params: z.object({
-            slug: z.string(),
-          }),
-          response: {
-            200: z.object({
-              invites: z.array(
-                z.object({
+export async function getInvite(app: FastifyInstance) {
+  app.withTypeProvider<ZodTypeProvider>().get(
+    '/invites/:inviteId',
+    {
+      schema: {
+        tags: ['Invites'],
+        summary: 'Get an invite',
+        params: z.object({
+          inviteId: z.string().uuid(),
+        }),
+        response: {
+          200: z.object({
+            invite: z.object({
+              id: z.string().uuid(),
+              role: roleSchema,
+              email: z.string().email(),
+              created_at: z.date(),
+              organization: z.object({
+                name: z.string(),
+              }),
+              author: z
+                .object({
                   id: z.string().uuid(),
-                  role: roleSchema,
-                  email: z.string().email(),
-                  created_at: z.date(),
-                  author: z
-                    .object({
-                      id: z.string().uuid(),
-                      name: z.string().nullable(),
-                    })
-                    .nullable(),
-                }),
-              ),
+                  name: z.string().nullable(),
+                  avatarUrl: z.string().url().nullable(),
+                })
+                .nullable(),
             }),
-          },
+          }),
         },
       },
-      async (request) => {
-        const { slug } = request.params
-        const userId = await request.getCurrentUserId()
-        const { organization, membership } =
-          await request.getUserMembership(slug)
+    },
+    async (request) => {
+      const { inviteId } = request.params
 
-        const { cannot } = getUserPermissions(userId, membership.role)
-
-        if (cannot('get', 'Invite')) {
-          throw new UnauthorizedError(
-            `You're not allowed to get organization invites.`,
-          )
-        }
-
-        const invites = await prisma.invite.findMany({
-          where: {
-            organizationId: organization.id,
-          },
-          select: {
-            id: true,
-            email: true,
-            role: true,
-            created_at: true,
-            author: {
-              select: {
-                id: true,
-                name: true,
-              },
+      const invite = await prisma.invite.findUnique({
+        where: {
+          id: inviteId,
+        },
+        select: {
+          id: true,
+          email: true,
+          role: true,
+          created_at: true,
+          author: {
+            select: {
+              id: true,
+              name: true,
+              avatarUrl: true,
             },
           },
-          orderBy: {
-            created_at: 'desc',
+          organization: {
+            select: {
+              name: true,
+            },
           },
-        })
+        },
+      })
 
-        return { invites }
-      },
-    )
+      if (!invite) {
+        throw new BadRequestError('Invite not found')
+      }
+
+      return { invite }
+    },
+  )
 }
