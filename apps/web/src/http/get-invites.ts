@@ -1,5 +1,6 @@
-import { api } from './api-client'
 import type { GetInvitesResponse } from '@/interfaces/get-invites-interface'
+
+import { api } from './api-client'
 
 export async function getInvites(org: string) {
   const result = await api

@@ -1,5 +1,9 @@
-import type { UpdateOrganizationRequest, UpdateOrganizationResponse } from "@/interfaces/update-organization-interface";
-import { api } from "./api-client";
+import type {
+  UpdateOrganizationRequest,
+  UpdateOrganizationResponse,
+} from '@/interfaces/update-organization-interface'
+
+import { api } from './api-client'
 
 export async function updateOrganization({
   org,

@@ -18,7 +18,6 @@ import {
 } from '@/components/ui/table'
 import { getBilling } from '@/http/get-billing'
 
-
 export async function Billing() {
   const currentOrg = getCurrentOrg()
   const { billing } = await getBilling(currentOrg!)

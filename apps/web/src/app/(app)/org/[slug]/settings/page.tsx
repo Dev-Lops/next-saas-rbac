@@ -1,9 +1,16 @@
-import { ability, getCurrentOrg } from "@/auth/auth"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { OrganizationForm } from "../../organization-form"
-import { ShutdownOrganizationButton } from "./shutdown-organization-button"
-import { getOrganization } from "@/http/get-organization"
-import { Billing } from "./billing"
+import { ability, getCurrentOrg } from '@/auth/auth'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { getOrganization } from '@/http/get-organization'
+
+import { OrganizationForm } from '../../organization-form'
+import { Billing } from './billing'
+import { ShutdownOrganizationButton } from './shutdown-organization-button'
 
 export default async function Settingss() {
   const currentOrg = getCurrentOrg()
@@ -16,7 +23,6 @@ export default async function Settingss() {
   const { organization } = await getOrganization(currentOrg!)
 
   return (
-
     <div className="space-y-4">
       <h1 className="text-2xl font-bold">Settings</h1>
 
@@ -25,28 +31,39 @@ export default async function Settingss() {
           <Card>
             <CardHeader>
               <CardTitle>Organization settings</CardTitle>
-              <CardDescription>Update your organization details</CardDescription>
+              <CardDescription>
+                Update your organization details
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <OrganizationForm isUpdating initialData={{
-                name: organization.name,
-                domain: organization.domain,
-                shouldAttachUsersByDomain: organization.shouldAttachUsersByDomain,
-              }} />
+              <OrganizationForm
+                isUpdating
+                initialData={{
+                  name: organization.name,
+                  domain: organization.domain,
+                  shouldAttachUsersByDomain:
+                    organization.shouldAttachUsersByDomain,
+                }}
+              />
             </CardContent>
           </Card>
         )}
       </div>
 
       {canGetBilling && (
-        <div><Billing /></div>
+        <div>
+          <Billing />
+        </div>
       )}
 
       {canShutdownOrganization && (
         <Card>
           <CardHeader>
             <CardTitle>Shutdown organization</CardTitle>
-            <CardDescription>This will delete all organization data including all projects. You cannot undo this action. </CardDescription>
+            <CardDescription>
+              This will delete all organization data including all projects. You
+              cannot undo this action.{' '}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ShutdownOrganizationButton />

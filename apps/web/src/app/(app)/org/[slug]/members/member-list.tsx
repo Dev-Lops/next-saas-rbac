@@ -6,14 +6,12 @@ import { ability, getCurrentOrg } from '@/auth/auth'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
-
+import { getMembers } from '@/http/get-members'
 import { getMembership } from '@/http/get-membership'
 import { getOrganization } from '@/http/get-organization'
 
 import { removeMemberAction } from './actions'
-import { getMembers } from '@/http/get-members'
 import { UpdateMemberRoleSelect } from './update-member-role-select'
-
 
 export async function MemberList() {
   const currentOrg = getCurrentOrg()
@@ -74,11 +72,11 @@ export async function MemberList() {
                         'transfer_ownership',
                         authOrganization,
                       ) && (
-                          <Button size="sm" variant="ghost">
-                            <ArrowLeftRight className="mr-2 size-4" />
-                            Transfer ownership
-                          </Button>
-                        )}
+                        <Button size="sm" variant="ghost">
+                          <ArrowLeftRight className="mr-2 size-4" />
+                          Transfer ownership
+                        </Button>
+                      )}
 
                       <UpdateMemberRoleSelect
                         memberId={member.id}

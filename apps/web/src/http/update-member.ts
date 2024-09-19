@@ -1,5 +1,6 @@
-import { api } from './api-client'
 import type { UpdateMemberRequest } from '@/interfaces/update-member-interface'
+
+import { api } from './api-client'
 
 export async function updateMember({
   org,

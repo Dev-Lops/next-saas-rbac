@@ -6,7 +6,6 @@ import { getInvites } from '@/http/get-invites'
 import { CreateInviteForm } from './create-invite-form'
 import { RevokeInviteButton } from './revoke-invite-button'
 
-
 export async function Invites() {
   const currentOrg = getCurrentOrg()
   const permissions = await ability()

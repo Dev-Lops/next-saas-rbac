@@ -1,9 +1,8 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 export default function ForgotPasswordPage() {
   return (
@@ -13,13 +12,13 @@ export default function ForgotPasswordPage() {
         <Input name="email" type="email" id="email" />
       </div>
 
-      <Button type="submit" className="w-full">Recover password</Button>
+      <Button type="submit" className="w-full">
+        Recover password
+      </Button>
 
       <Button variant="link" className="w-full" size="sm" asChild>
-        <Link href='/auth/sign-in'>
-          Sign in instead
-        </Link>
+        <Link href="/auth/sign-in">Sign in instead</Link>
       </Button>
     </form>
-  );
+  )
 }

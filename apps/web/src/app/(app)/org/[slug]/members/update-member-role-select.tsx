@@ -3,10 +3,15 @@
 import { Role } from '@saas/auth'
 import { ComponentProps } from 'react'
 
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 import { updateMemberAction } from './actions'
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 
 interface UpdateMemberRoleSelectProps extends ComponentProps<typeof Select> {
   memberId: string

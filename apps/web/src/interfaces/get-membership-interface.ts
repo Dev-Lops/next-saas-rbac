@@ -1,4 +1,4 @@
-import { Role } from '@saas/auth';
+import { Role } from '@saas/auth'
 
 export interface getMembershipResponse {
   membership: {

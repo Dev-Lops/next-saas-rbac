@@ -1,6 +1,5 @@
-
 export interface CreateOrganizationRequest {
-  name: string;
+  name: string
   domain: string | null
   shouldAttachUsersByDomain: boolean
 }

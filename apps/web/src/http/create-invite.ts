@@ -1,6 +1,9 @@
-import type { CreateInviteRequest, CreateInviteResponse } from '@/interfaces/create-invite-interface'
-import { api } from './api-client'
+import type {
+  CreateInviteRequest,
+  CreateInviteResponse,
+} from '@/interfaces/create-invite-interface'
 
+import { api } from './api-client'
 
 export async function createInvite({
   org,
